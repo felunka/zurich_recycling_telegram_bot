@@ -7,13 +7,14 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+jar {
+    manifest {
+        attributes 'Main-Class': 'zurich_recycling_telegramm_bot.Main'
+    }
 }
 
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service";
-    termsOfServiceAgree = "yes"
+repositories {
+    mavenCentral()
 }
 
 dependencies {
