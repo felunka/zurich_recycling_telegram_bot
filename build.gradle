@@ -11,6 +11,11 @@ repositories {
     mavenCentral()
 }
 
+buildScan {
+    termsOfServiceUrl = "https://gradle.com/terms-of-service";
+    termsOfServiceAgree = "yes"
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.xerial:sqlite-jdbc:3.8.11.2'
