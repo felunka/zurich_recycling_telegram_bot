@@ -15,7 +15,6 @@ public class Scheduler {
         timer.schedule(new TimerTask(){
             public void run(){
                 Main.sendNotifications();
-                addTask();
             }
         }, date, 24*60*60*1000);
     }
