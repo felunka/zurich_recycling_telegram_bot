@@ -1,13 +1,10 @@
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.print.DocFlavor;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ErzApi {
@@ -44,18 +41,22 @@ public class ErzApi {
         }
         in.close();
 
+        System.out.println(response.toString());
+
         // return result
         return response.toString();
     }
 
-    private String getCurrentDate() {
+    private String getTomorrowDate() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date date = calendar.getTime();
         return dateFormat.format(date);
     }
 
     public boolean queryEndpoint(String group, int zip) {
-        String date = getCurrentDate();
+        String date = getTomorrowDate();
         String endpoint = String.format("calendar/%s.json?zip=%d&start=%s&end=%s&offset=0&limit=0", group, zip, date, date);
         String response = "";
         try {
@@ -63,7 +64,7 @@ public class ErzApi {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        if(response.contains("\"total_count\": 1")) {
+        if(response.contains("{\"total_count\":1}")) {
             return true;
         }
         return false;
