@@ -9,7 +9,7 @@ sourceCompatibility = 1.8
 
 jar {
     manifest {
-        attributes 'Main-Class': 'zurich_recycling_telegramm_bot.Main'
+        attributes 'Main-Class': 'Main'
     }
 }
 
@@ -18,7 +18,6 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.xerial:sqlite-jdbc:3.8.11.2'
     implementation 'com.github.pengrad:java-telegram-bot-api:4.5.0'
     implementation 'org.json:json:20090211'
