@@ -3,10 +3,14 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,7 +35,7 @@ public class Main {
         database.initDB();
 
         // Create your bot passing the token received from @BotFather
-        bot = new TelegramBot("812487487:AAH6aULaTpT8wJeHWJ6vdI-HlUnvyttsBxE");
+        bot = new TelegramBot(getApiKey());
 
         HashMap<Long, String> session = new HashMap<Long, String>();
 
@@ -58,7 +62,7 @@ public class Main {
                     switch (matcher.group(1)) {
                         case "sub":
                             session.put(chatId, matcher.group(1));
-                            bot.execute(new SendMessage(chatId, "Tell me, what you want to subscribe to."));
+                            bot.execute(new SendMessage(chatId, "Tell me, what you want to subscribe to. Use /list to see all possibilities."));
                             break;
                         case "unsub":
                             session.put(chatId, matcher.group(1));
@@ -91,6 +95,7 @@ public class Main {
                             case "location":
                                 bot.execute(new SendMessage(chatId, location(chatId, update.message().text())));
                         }
+                        session.remove(chatId);
                     }
                 }
             }
@@ -159,6 +164,23 @@ public class Main {
         } else {
             return "Fail!";
         }
+    }
+
+    private static String getApiKey() {
+        try (InputStream input = new FileInputStream("config.properties")) {
+
+            Properties prop = new Properties();
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            return prop.getProperty("apikey");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return "error";
     }
 
     public static void sendNotifications() {
