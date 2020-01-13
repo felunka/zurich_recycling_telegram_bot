@@ -207,7 +207,7 @@ public class Main {
                 System.out.println(String.format("%d will get notification? %b", subs.getLong("chatID"), notify));
 
                 if(notify) {
-                    bot.execute(new SendMessage(subs.getLong("chatID"), String.format("Tomorrow is: %s", groupEnum.name())));
+                    bot.execute(new SendMessage(subs.getLong("chatID"), String.format("Quick reminder! %s will be picked up tomorrow.", groupEnum.name())));
                 }
             }
         } catch(SQLException e) {
